@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(Throwable value) {
-
+                Log.d("@@@", "onFailure: listener");
             }
         });
     }
@@ -154,13 +154,13 @@ public abstract class BaseActivity extends AppCompatActivity{
             }
             @Override
             public void onFailure(Throwable value) {
-
+                Log.d("@@@", "onFailure: subscription");
             }
         });
     }
 
     public void unsubscribe(String topic) {
-        UTF8Buffer topicU = new UTF8Buffer(topic);
+        UTF8Buffer topicU = new UTF8Buffer(topic+"state");
         UTF8Buffer [] tArr = new UTF8Buffer[1];
         tArr[0] = topicU;
         connection.unsubscribe(tArr, new Callback<Void>() {
