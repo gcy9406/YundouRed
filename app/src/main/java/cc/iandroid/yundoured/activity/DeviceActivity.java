@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.iandroid.yundoured.R;
-import cc.iandroid.yundoured.adapter.OutputAdapter;
 import cc.iandroid.yundoured.adapter.InputAdapter;
+import cc.iandroid.yundoured.adapter.OutputAdapter;
 import cc.iandroid.yundoured.bean.DeviceInfo;
 import cc.iandroid.yundoured.callback.OnRelayControlClickLister;
 import cc.iandroid.yundoured.common.EventMsg;
@@ -111,7 +110,6 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMesg(EventMsg event) {
         String info = event.getString();
-        Log.d(TAG, "getMesg: "+info);
         if (info != null){
             try {
                 JSONObject json = new JSONObject(info);
@@ -140,8 +138,8 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
                     }else {
                         lineTemHum.setVisibility(View.VISIBLE);
                     }
-                    deviceTemp.setText("温度(℃):"+Double.parseDouble(temp.equals("")?"0":temp)/10);
-                    deviceHum.setText("湿度(RH%):"+Double.parseDouble(hum.equals("")?"0":hum)/10);
+                    deviceTemp.setText(getString(R.string.temp)+Double.parseDouble(temp.equals("")?"0":temp)/10);
+                    deviceHum.setText(getString(R.string.hum)+Double.parseDouble(hum.equals("")?"0":hum)/10);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

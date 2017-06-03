@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">RED8@物联网地带</string>
+    <string name="qr_code">扫描二维码</string>
+    <string name="temp">温度(℃):</string>
+    <string name="hum">湿度(RH%):</string>
+    <string name="set_name">设置名称</string>
+    <string name="device_exist">设备已经存在！</string>
+    <string name="device_manager">设备管理</string>
+    <string name="camera_code">相机扫描设备</string>
+    <string name="album_code">识别二维码图片</string>
+    <string name="add_device">添加设备</string>
+    <string name="camera_reject">相机权限被拒绝</string>
+    <string name="album_reject">相册权限被拒绝</string>
+    <string name="code_wrong">二维码不正确</string>
+    <string name="debug">--调试</string>
+    <string name="device_name">设备名称</string>
+    <string name="long_click_more">长按设备可以进行更多操作</string>
+    <string name="input_cmd">手动输入命令</string>
+    <string name="send_cmd">发送</string>
+    <string name="lock">互锁</string>
+    <string name="turn">翻转</string>
+    <string name="pluse">点触</string>
+    <string name="on">开</string>
+    <string name="off">关</string>
+    <string name="modify">修改</string>
+    <string name="unbind">解绑</string>
+    <string name="manual">调试</string>
+    <string name="clear_data">清除数据</string>
 </resources>

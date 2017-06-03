@@ -68,7 +68,7 @@ public class ManualActivity extends BaseActivity {
             finish();
             return;
         }
-        textTitle.setText(topic+"--调试");
+        textTitle.setText(topic+getString(R.string.debug));
         subscription(topic);
     }
 

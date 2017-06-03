@@ -20,5 +20,5 @@
             android:textSize="12sp"
             android:textColor="@color/colorGray"
             android:background="#DCEAF0"
-            android:text="长按设备可以进行更多操作"/>
+            android:text="@string/long_click_more"/>
 </LinearLayout>

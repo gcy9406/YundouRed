@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     protected void initDatas() {
         //设置toolbar
         imageBack.setVisibility(View.GONE);
-        textTitle.setText("设备管理");
+        textTitle.setText(R.string.device_manager);
         imageSetting.setImageResource(R.mipmap.icon_qrcode);
 
         //设置设备列表
@@ -97,9 +97,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.image_toolbar_setting:
-                final String[] stringItems = {"相机扫描设备", "识别二维码图片"};
+                final String[] stringItems = {getString(R.string.camera_code), getString(R.string.album_code)};
                 final ActionSheetDialog dialog = new ActionSheetDialog(this, stringItems, null);
-                dialog.title("添加设备")//
+                dialog.title(getString(R.string.add_device))//
                         .titleTextSize_SP(14.5f)//
                         .show();
                 dialog.setOnOperItemClickL(new OnOperItemClickL() {
@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                                     Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                                                     startActivityForResult(intent, REQUEST_CODE);
                                                 } else {
-                                                    Toast.makeText(MainActivity.this, "相机权限被拒绝", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(MainActivity.this, R.string.camera_reject, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                                                     intentPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
                                                     startActivityForResult(intentPic, REQUEST_IMAGE);
                                                 } else {
-                                                    Toast.makeText(MainActivity.this, "相册权限被拒绝", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(MainActivity.this, R.string.album_reject, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
@@ -162,13 +162,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 if (bundle != null) {
                     if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
                         String result = bundle.getString(CodeUtils.RESULT_STRING);
-                        if (result.contains("sn")) {
-                            setDeviceName(result);
-                        } else {
-                            Toast.makeText(this, "二维码不正确", Toast.LENGTH_SHORT).show();
+                        if (result.contains("NET_RED8CH")) {
+                            if (result.contains("sn")) {
+                                setDeviceName(result);
+                            } else {
+                                Toast.makeText(this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
                         }
                     } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
-                        Toast.makeText(this, "二维码不正确", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
                     }
                 }
             } else if (requestCode == REQUEST_IMAGE) {
@@ -177,16 +181,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 CodeUtils.analyzeBitmap(path, new CodeUtils.AnalyzeCallback() {
                     @Override
                     public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-                        if (result.contains("sn")) {
-                            setDeviceName(result);
-                        } else {
-                            Toast.makeText(MainActivity.this, "二维码错误", Toast.LENGTH_SHORT).show();
+                        if (result.contains("NET_RED8CH")) {
+                            if (result.contains("sn")) {
+                                setDeviceName(result);
+                            } else {
+                                Toast.makeText(MainActivity.this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(MainActivity.this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onAnalyzeFailed() {
-                        Toast.makeText(MainActivity.this, "二维码错误", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.code_wrong, Toast.LENGTH_SHORT).show();
                     }
                 });
             }else if (requestCode == REQUEST_ADD){

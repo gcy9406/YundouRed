@@ -56,7 +56,7 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void initDatas() {
         imageFinish.setImageResource(R.mipmap.icon_finish);
-        textTitle.setText("设置名称");
+        textTitle.setText(R.string.set_name);
 
         result = getIntent().getExtras().getString("result","");
         modify = getIntent().getExtras().getBoolean("modify",false);
@@ -66,7 +66,7 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
         if (!modify){
             List<DeviceInfo> deviceListInDb = deviceInfoDao.queryBuilder().where(DeviceInfoDao.Properties.Sn.eq(qrCode.getSn())).list();
             if (deviceListInDb != null && deviceListInDb.size() > 0){
-                Toast.makeText(this, "设备已经存在！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.device_exist, Toast.LENGTH_SHORT).show();
                 finish();
                 return;
             }

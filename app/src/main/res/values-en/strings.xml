@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">RED8@IOTZone</string>
+    <string name="qr_code">QR Code</string>
+    <string name="temp">Tem(℃):</string>
+    <string name="hum">Hum(RH%):</string>
+    <string name="set_name">Set Name</string>
+    <string name="device_exist">Device Existed！</string>
+    <string name="device_manager">Device Manager</string>
+    <string name="camera_code">From Camera</string>
+    <string name="album_code">From Album</string>
+    <string name="add_device">Add Device</string>
+    <string name="camera_reject">No Camera Permission</string>
+    <string name="album_reject">No Album Permission</string>
+    <string name="code_wrong">Error Code</string>
+    <string name="debug">--Debug</string>
+    <string name="device_name">Device Name</string>
+    <string name="long_click_more">More By Long Click Device</string>
+    <string name="input_cmd">Input Cmd</string>
+    <string name="send_cmd">Send</string>
+    <string name="lock">LOCK</string>
+    <string name="turn">TURN</string>
+    <string name="pluse">PLUSE</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="modify">MODIFY</string>
+    <string name="unbind">UNBIND</string>
+    <string name="manual">DEBUG</string>
+    <string name="clear_data">CLEAR</string>
+</resources>

@@ -48,7 +48,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initDatas() {
-        textTitle.setText("扫描二维码");
+        textTitle.setText(R.string.qr_code);
         imageSetting.setVisibility(View.GONE);
     }
 

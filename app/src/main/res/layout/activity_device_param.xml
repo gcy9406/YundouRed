@@ -16,5 +16,5 @@
                 android:padding="10dp"
                 android:layout_margin="5dp"
                 android:background="@drawable/shape_border_gray"
-                android:hint="设备名称"/>
+                android:hint="@string/device_name"/>
 </LinearLayout>
