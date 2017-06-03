@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.image_toolbar_setting:
                 final String[] stringItems = {getString(R.string.camera_code), getString(R.string.album_code)};
                 final ActionSheetDialog dialog = new ActionSheetDialog(this, stringItems, null);
+                dialog.cancelText(getString(R.string.cancel));
                 dialog.title(getString(R.string.add_device))//
                         .titleTextSize_SP(14.5f)//
                         .show();

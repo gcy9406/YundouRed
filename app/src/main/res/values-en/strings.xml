@@ -26,4 +26,5 @@
     <string name="unbind">UNBIND</string>
     <string name="manual">DEBUG</string>
     <string name="clear_data">CLEAR</string>
+    <string name="cancel">Cancel</string>
 </resources>
