@@ -39,7 +39,6 @@ public abstract class BaseActivity extends AppCompatActivity{
     public Gson gson;
     public MQTT mqtt;
     public CallbackConnection connection;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -5,11 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +45,6 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
 
     @Override
     public void onBindViewHolder(final DeviceViewHolder holder, final int position) {
-        if (data.get(position).getState()){
-            Glide.with(context).load(R.mipmap.icon_state_on).into(holder.deviceState);
-        }else {
-            Glide.with(context).load(R.mipmap.icon_state_off).into(holder.deviceState);
-        }
         holder.deviceName.setText(data.get(position).getName());
         holder.deviceSn.setText(data.get(position).getSn());
         holder.deviceVersion.setText(data.get(position).getVer());
@@ -80,14 +72,12 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
 
     class DeviceViewHolder extends RecyclerView.ViewHolder{
         LinearLayout deviceItem;
-        ImageView deviceState;
         TextView deviceName;
         TextView deviceSn;
         TextView deviceVersion;
         public DeviceViewHolder(View itemView) {
             super(itemView);
             deviceItem = (LinearLayout) itemView.findViewById(R.id.device_item);
-            deviceState = (ImageView) itemView.findViewById(R.id.device_state);
             deviceName = (TextView) itemView.findViewById(R.id.device_name);
             deviceSn = (TextView) itemView.findViewById(R.id.device_sn);
             deviceVersion = (TextView) itemView.findViewById(R.id.device_ver);

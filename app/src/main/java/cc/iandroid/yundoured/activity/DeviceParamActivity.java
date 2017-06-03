@@ -71,9 +71,10 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
                 return;
             }
         }
+        //初始化数据，获得设别名称
         subscription(qrCode.getSn());
         publish(qrCode.getSn(),"device=?");
-        //初始化数据，获得设别名称
+        imageFinish.setVisibility(View.GONE);
     }
 
     @Override
@@ -120,6 +121,7 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
                 String cmd = json.optString("cmd");
                 if (cmd.equals("device")){
                     editText.setText(json.optString("devicename"));//设置名称
+                    imageFinish.setVisibility(View.VISIBLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

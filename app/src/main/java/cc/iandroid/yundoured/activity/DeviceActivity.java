@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +46,8 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
     private static String RELAY_PLUSE = "2";
     private static String RELAY_TURN = "3";
     private static String RELAY_LOCK = "4";
+    private LinearLayout lineTemHum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
         inputView = (RecyclerView) findViewById(R.id.device_input);
         deviceTemp = (TextView) findViewById(R.id.device_temp);
         deviceHum = (TextView) findViewById(R.id.device_hum);
+        lineTemHum = (LinearLayout) findViewById(R.id.line_tem_hum);
     }
 
     @Override
@@ -86,6 +90,8 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
         inputView.setLayoutManager(new GridLayoutManager(this,8,LinearLayoutManager.VERTICAL,false));
         inputAdapter = new InputAdapter(this);
         inputView.setAdapter(inputAdapter);
+
+        lineTemHum.setVisibility(View.GONE);
 
         subscription(deviceInfo.getSn());
         publish(deviceInfo.getSn(),"state=?");
@@ -129,8 +135,13 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
                         inputData.add(tempIns[i]+"");
                     }
                     inputAdapter.setData(inputData);
-                    deviceTemp.setText("温度(℃):"+Double.parseDouble(temp.equals("")?"0":temp)/100);
-                    deviceHum.setText("湿度(RH%):"+Double.parseDouble(hum.equals("")?"0":hum)/100);
+                    if (temp.equals("")&&hum.equals("")){
+                        lineTemHum.setVisibility(View.GONE);
+                    }else {
+                        lineTemHum.setVisibility(View.VISIBLE);
+                    }
+                    deviceTemp.setText("温度(℃):"+Double.parseDouble(temp.equals("")?"0":temp)/10);
+                    deviceHum.setText("湿度(RH%):"+Double.parseDouble(hum.equals("")?"0":hum)/10);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
