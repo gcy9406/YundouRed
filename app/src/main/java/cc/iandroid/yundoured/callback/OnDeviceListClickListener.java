@@ -9,6 +9,6 @@ import cc.iandroid.yundoured.bean.DeviceInfo;
  */
 
 public interface OnDeviceListClickListener {
-    void doClick(int pos, DeviceInfo deviceInfo);
+    void doClick(int pos, DeviceInfo deviceInfo,int type);
     void doLongClick(int pos, DeviceInfo deviceInfo, LinearLayout item);
 }

@@ -4,13 +4,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:layout_marginBottom="1dp"
-        android:padding="5dp">
+        android:background="@drawable/shape_item"
+        android:layout_margin="4dp"
+        android:padding="10dp">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="horizontal">
 
         <ImageView
@@ -42,7 +43,7 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape_border_blue"
+                android:background="@drawable/selector_button"
                 android:gravity="center"
                 android:text="@string/lock"/>
 
@@ -54,7 +55,7 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape_border_blue"
+                android:background="@drawable/selector_button"
                 android:gravity="center"
                 android:text="@string/turn"/>
 
@@ -66,7 +67,7 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape_border_blue"
+                android:background="@drawable/selector_button"
                 android:gravity="center"
                 android:text="@string/pluse"/>
 
@@ -78,7 +79,7 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape_border_blue"
+                android:background="@drawable/selector_button"
                 android:gravity="center"
                 android:text="@string/on"/>
 
@@ -90,7 +91,7 @@
                 android:textSize="12sp"
                 android:padding="5dp"
                 android:layout_margin="2dp"
-                android:background="@drawable/shape_border_blue"
+                android:background="@drawable/selector_button"
                 android:gravity="center"
                 android:text="@string/off"/>
     </LinearLayout>

@@ -7,7 +7,7 @@
     <string name="device_exist">Device Existed！</string>
     <string name="device_manager">Device Manager</string>
     <string name="camera_code">From Camera</string>
-    <string name="album_code">From Album</string>
+    <string name="album_code">Local Device</string>
     <string name="add_device">Add Device</string>
     <string name="camera_reject">No Camera Permission</string>
     <string name="album_reject">No Album Permission</string>
@@ -27,4 +27,14 @@
     <string name="manual">DEBUG</string>
     <string name="clear_data">CLEAR</string>
     <string name="cancel">Cancel</string>
+
+    <string name="set_device_name">Device Name</string>
+    <string name="find_device">Find Device</string>
+    <string name="input_sn">please input sn</string>
+    <string name="input_name">please input name</string>
+    <string name="intpu_ip_tip">please ip，example：192.168.1.166</string>
+    <string name="input_ip">Device IP</string>
+    <string name="set_right_name">please set valid name</string>
+
+    <string name="relay">relay</string>
 </resources>

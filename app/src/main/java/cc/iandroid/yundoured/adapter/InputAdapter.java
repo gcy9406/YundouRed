@@ -45,7 +45,7 @@ public class InputAdapter extends RecyclerView.Adapter<InputAdapter.InputViewHol
         }else {
             Glide.with(context).load(R.mipmap.icon_state_off).into(holder.itemState);
         }
-        holder.itemName.setText(position+1+"");
+        holder.itemName.setText(context.getString(R.string.input)+(position+1));
     }
 
     @Override

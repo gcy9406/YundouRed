@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,12 +48,18 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
     public void onBindViewHolder(final DeviceViewHolder holder, final int position) {
         holder.deviceName.setText(data.get(position).getName());
         holder.deviceSn.setText(data.get(position).getSn());
-        holder.deviceVersion.setText(data.get(position).getVer());
-        holder.deviceItem.setOnClickListener(new View.OnClickListener() {
+        holder.netControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int pos = holder.getLayoutPosition();
-                onDeviceListClickListener.doClick(pos,data.get(pos));
+                onDeviceListClickListener.doClick(pos,data.get(pos),0);
+            }
+        });
+        holder.localControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                onDeviceListClickListener.doClick(pos,data.get(pos),1);
             }
         });
         holder.deviceItem.setOnLongClickListener(new View.OnLongClickListener() {
@@ -74,13 +81,16 @@ public class DeviceListAdapter extends RecyclerView.Adapter<DeviceListAdapter.De
         LinearLayout deviceItem;
         TextView deviceName;
         TextView deviceSn;
-        TextView deviceVersion;
+        Button netControl;
+        Button localControl;
+
         public DeviceViewHolder(View itemView) {
             super(itemView);
             deviceItem = (LinearLayout) itemView.findViewById(R.id.device_item);
             deviceName = (TextView) itemView.findViewById(R.id.device_name);
             deviceSn = (TextView) itemView.findViewById(R.id.device_sn);
-            deviceVersion = (TextView) itemView.findViewById(R.id.device_ver);
+            netControl = (Button) itemView.findViewById(R.id.btn_net);
+            localControl = (Button) itemView.findViewById(R.id.btn_local);
         }
     }
 }

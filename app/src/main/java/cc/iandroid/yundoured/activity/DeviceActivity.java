@@ -46,6 +46,7 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
     private static String RELAY_TURN = "3";
     private static String RELAY_LOCK = "4";
     private LinearLayout lineTemHum;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,21 +80,29 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
     protected void initDatas() {
         bundle = getIntent().getExtras();
         deviceInfo = (DeviceInfo) bundle.getSerializable("device");
-        textTitle.setText(deviceInfo.getName());
+        mType = bundle.getInt("type", 0);
+        String name;
+        if (mType == 0){
+            name = "(远程)";
+        }else {
+            name = "(本地)";
+        }
+        textTitle.setText(deviceInfo.getName()+name);
         relayData = new ArrayList<>();
         inputData = new ArrayList<>();
         deviceView.setLayoutManager(new LinearLayoutManager(this));
         outoutAdapter = new OutputAdapter(this);
         deviceView.setAdapter(outoutAdapter);
+//        deviceView.setNestedScrollingEnabled(false);
 
-        inputView.setLayoutManager(new GridLayoutManager(this,8,LinearLayoutManager.VERTICAL,false));
+        inputView.setLayoutManager(new GridLayoutManager(this,4,LinearLayoutManager.VERTICAL,false));
         inputAdapter = new InputAdapter(this);
         inputView.setAdapter(inputAdapter);
 
         lineTemHum.setVisibility(View.GONE);
 
         subscription(deviceInfo.getSn());
-        publish(deviceInfo.getSn(),"state=?");
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),"state=?",mType);
     }
 
     @Override
@@ -149,27 +158,27 @@ public class DeviceActivity extends BaseActivity implements OnRelayControlClickL
 
     @Override
     public void doOnClick(int pos,int size) {
-        publish(deviceInfo.getSn(),sendCmd(pos,size,RELAY_ON));
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),sendCmd(pos,size,RELAY_ON),mType);
     }
 
     @Override
     public void doOffClick(int pos,int size) {
-        publish(deviceInfo.getSn(),sendCmd(pos,size,RELAY_OFF));
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),sendCmd(pos,size,RELAY_OFF),mType);
     }
 
     @Override
     public void doPluseClick(int pos,int size) {
-        publish(deviceInfo.getSn(),sendCmd(pos,size,RELAY_PLUSE));
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),sendCmd(pos,size,RELAY_PLUSE),mType);
     }
 
     @Override
     public void doTurnClick(int pos,int size) {
-        publish(deviceInfo.getSn(),sendCmd(pos,size,RELAY_TURN));
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),sendCmd(pos,size,RELAY_TURN),mType);
     }
 
     @Override
     public void doLockClick(int pos,int size) {
-        publish(deviceInfo.getSn(),sendCmd(pos,size,RELAY_LOCK));
+        publish(deviceInfo.getSn(),deviceInfo.getIp(),sendCmd(pos,size,RELAY_LOCK),mType);
     }
 
     public String sendCmd(int pos,int size,String type){

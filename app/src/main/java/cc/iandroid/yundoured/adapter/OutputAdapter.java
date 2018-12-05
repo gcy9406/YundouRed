@@ -50,7 +50,7 @@ public class OutputAdapter extends RecyclerView.Adapter<OutputAdapter.DeviceView
         }else {
             Glide.with(context).load(R.mipmap.icon_state_off).into(holder.itemState);
         }
-        holder.itemName.setText("relay"+(position+1));
+        holder.itemName.setText(context.getString(R.string.relay)+(position+1));
 
         holder.itemOn.setOnClickListener(new View.OnClickListener() {
             @Override

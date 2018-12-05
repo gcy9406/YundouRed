@@ -21,6 +21,9 @@ import com.flyco.dialog.widget.ActionSheetDialog;
 import com.flyco.dialog.widget.popup.BubblePopup;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,7 @@ import cc.iandroid.yundoured.bean.DeviceInfo;
 import cc.iandroid.yundoured.bean.DeviceInfoDao;
 import cc.iandroid.yundoured.bean.QRCode;
 import cc.iandroid.yundoured.callback.OnDeviceListClickListener;
+import cc.iandroid.yundoured.common.UpdateLocal;
 import cc.iandroid.yundoured.utils.MiPictureHelper;
 import rx.functions.Action1;
 
@@ -45,6 +49,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     private static final String IMAGE_UNSPECIFIED = "image/*";
     private List<DeviceInfo> deviceData;
     private DeviceListAdapter adapter;
+    private int REQUEST_LOCAL = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,26 +128,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
                                 break;
                             case 1:
-                                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                        .subscribe(new Action1<Boolean>() {
-                                            @Override
-                                            public void call(Boolean granted) {
-                                                if (granted) {
-                                                    Intent intentPic = new Intent(Intent.ACTION_PICK, null);
-                                                    intentPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
-                                                    startActivityForResult(intentPic, REQUEST_IMAGE);
-                                                } else {
-                                                    Toast.makeText(MainActivity.this, R.string.album_reject, Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-
+//                                rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+//                                        .subscribe(new Action1<Boolean>() {
+//                                            @Override
+//                                            public void call(Boolean granted) {
+//                                                if (granted) {
+//                                                    Intent intentPic = new Intent(Intent.ACTION_PICK, null);
+//                                                    intentPic.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+//                                                    startActivityForResult(intentPic, REQUEST_IMAGE);
+//                                                } else {
+//                                                    Toast.makeText(MainActivity.this, R.string.album_reject, Toast.LENGTH_SHORT).show();
+//                                                }
+//                                            }
+//                                        });
+                                    startActivity(new Intent(MainActivity.this,DeviceLocalActivity.class));
                                 break;
+                                default:
+                                    break;
                         }
                         dialog.dismiss();
                     }
                 });
                 break;
+                default:
+                    break;
         }
     }
 
@@ -202,11 +211,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 Bundle resultBundle = data.getExtras();
                 String result = resultBundle.getString("result");
                 String name = resultBundle.getString("name");
+                String ip = resultBundle.getString("ip");
                 boolean modify = resultBundle.getBoolean("modify",false);
                 int pos = resultBundle.getInt("pos",0);
                 //更新列表
                 QRCode qrCode = gson.fromJson(result, QRCode.class);
-                DeviceInfo device = new DeviceInfo(qrCode.getSn(),qrCode.getUser(),qrCode.getPsw(),qrCode.getVer(),"",name,true);
+                DeviceInfo device = new DeviceInfo(qrCode.getSn(),qrCode.getUser(),qrCode.getPsw(),qrCode.getVer(),ip,name,true);
                 if (modify){
                     deviceData.set(pos,device);
                 }else {
@@ -246,10 +256,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      * @param deviceInfo
      */
     @Override
-    public void doClick(int pos, DeviceInfo deviceInfo) {
+    public void doClick(int pos, DeviceInfo deviceInfo,int type) {
         //进入设备
         Intent intent = new Intent(MainActivity.this, DeviceActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putInt("type",type);
         bundle.putSerializable("device", deviceInfo);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -267,7 +278,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         View inflate = View.inflate(this, R.layout.popup_bubble_line, null);
         TextView modify = (TextView) inflate.findViewById(R.id.bubble_modify);
         TextView unbind = (TextView) inflate.findViewById(R.id.bubble_unbind);
-        TextView debug = (TextView) inflate.findViewById(R.id.bubble_debug);
         final BubblePopup bubblePopup = new BubblePopup(this, inflate);
         bubblePopup.anchorView(item)
                 .gravity(Gravity.BOTTOM)
@@ -282,6 +292,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 QRCode code = new QRCode(device.getSn(),device.getUser(),device.getPsw(),device.getVer());
                 bundle.putString("result",gson.toJson(code));
                 bundle.putBoolean("modify",true);
+                bundle.putString("name",device.getName());
                 bundle.putInt("pos",pos);
                 intent.putExtras(bundle);
                 startActivityForResult(intent,REQUEST_ADD);
@@ -293,29 +304,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         unbind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 List<DeviceInfo> devices = deviceInfoDao.queryBuilder().where(DeviceInfoDao.Properties.Sn.eq(device.getSn())).list();
                 if (devices != null){
                     for (int i = 0; i < devices.size(); i++) {
                         deviceInfoDao.delete(devices.get(i));
                     }
                 }
-
                 deviceData.remove(pos);
                 adapter.setData(deviceData);
                 bubblePopup.dismiss();
             }
         });
+    }
 
-        //手动调试
-        debug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,ManualActivity.class);
-                startActivity(intent.putExtra("topic",deviceData.get(pos).getSn()));
-                bubblePopup.dismiss();
-            }
-        });
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getMesg(DeviceInfo event) {
+        deviceData.add(event);
+        adapter.setData(deviceData);
     }
 }

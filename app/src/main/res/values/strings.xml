@@ -7,8 +7,7 @@
     <string name="device_exist">设备已经存在！</string>
     <string name="device_manager">设备管理</string>
     <string name="camera_code">相机扫描设备</string>
-    <string name="album_code">识别二维码图片</string>
-    <string name="add_device">添加设备</string>
+    <string name="album_code">局域网设备</string>
     <string name="camera_reject">相机权限被拒绝</string>
     <string name="album_reject">相册权限被拒绝</string>
     <string name="code_wrong">二维码不正确</string>
@@ -27,4 +26,14 @@
     <string name="manual">调试</string>
     <string name="clear_data">清除数据</string>
     <string name="cancel">取消</string>
+    <string name="input">输入</string>
+    <string name="set_device_name">请设置设备名称</string>
+    <string name="find_device">发现设备</string>
+    <string name="add_device">添加设备</string>
+    <string name="input_sn">输入设备序列号</string>
+    <string name="input_name">输入设备名称</string>
+    <string name="intpu_ip_tip">输入设备IP，如：192.168.1.166</string>
+    <string name="input_ip">输入设备IP</string>
+    <string name="set_right_name">请设置合法的名称</string>
+    <string name="relay">开关</string>
 </resources>

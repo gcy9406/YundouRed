@@ -40,24 +40,4 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorWhite"
             android:textSize="12sp"/>
-    <View
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:background="@color/colorWhite"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"/>
-
-    <TextView
-            android:id="@+id/bubble_debug"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/manual"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/colorWhite"
-            android:textSize="12sp"/>
 </LinearLayout>

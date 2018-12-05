@@ -4,7 +4,8 @@
         android:id="@+id/device_item"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="72dp"
+    android:gravity="center_vertical"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/shape_border_gray_solid_white"
@@ -31,21 +32,21 @@
                 android:padding="2dp"
                 android:textColor="@color/colorGray"
                 android:text="序列号"/>
-
-        <TextView
-                android:id="@+id/device_ver"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:padding="2dp"
-                android:textColor="@color/colorGray"
-                android:text="版本"/>
     </LinearLayout>
-
-    <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:src="@mipmap/ic_action_go"/>
+    <Button
+        android:id="@+id/btn_net"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:background="@drawable/shape_net"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorWhite"
+        android:text="远程控制"/>
+    <Button
+        android:id="@+id/btn_local"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:background="@drawable/shape_local"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorWhite"
+        android:text="局域网控制"/>
 </LinearLayout>

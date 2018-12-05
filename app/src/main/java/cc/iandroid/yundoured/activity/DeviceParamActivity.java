@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +29,13 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
     private ImageView imageBack;
     private TextView textTitle;
     private ImageView imageFinish;
-    private ClearEditText editText;
+    private EditText editText;
+    private EditText editIp;
     private String result;
     private boolean modify;
     private QRCode qrCode;
     private int pos;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,8 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
         imageBack = (ImageView) findViewById(R.id.image_toolbar_back);
         textTitle = (TextView) findViewById(R.id.text_toolbar_title);
         imageFinish = (ImageView) findViewById(R.id.image_toolbar_setting);
-        editText = (ClearEditText) findViewById(R.id.edit_name);
+        editText = (EditText) findViewById(R.id.edit_name);
+        editIp = (EditText) findViewById(R.id.edit_ip);
     }
 
     @Override
@@ -61,7 +65,8 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
         result = getIntent().getExtras().getString("result","");
         modify = getIntent().getExtras().getBoolean("modify",false);
         pos = getIntent().getExtras().getInt("pos",0);
-
+        name = getIntent().getExtras().getString("name","");
+        editText.setText(name);
         qrCode = gson.fromJson(result, QRCode.class);
         if (!modify){
             List<DeviceInfo> deviceListInDb = deviceInfoDao.queryBuilder().where(DeviceInfoDao.Properties.Sn.eq(qrCode.getSn())).list();
@@ -71,10 +76,6 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
                 return;
             }
         }
-        //初始化数据，获得设别名称
-        subscription(qrCode.getSn());
-        publish(qrCode.getSn(),"device=?");
-        imageFinish.setVisibility(View.GONE);
     }
 
     @Override
@@ -90,42 +91,30 @@ public class DeviceParamActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.image_toolbar_setting:
                 String name = editText.getText().toString().trim();
+                if (name == null || name.equals("") || name.length() > 20){
+                    Toast.makeText(this, R.string.set_right_name,Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //完成的时候，更新一下名称
-                publish(qrCode.getSn(),"devicename="+name);
+                publishNet(qrCode.getSn(),"devicename="+name);
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString("result",result);
                 bundle.putString("name",name);
+                bundle.putString("ip",editIp.getText().toString());
                 bundle.putBoolean("modify",modify);
                 bundle.putInt("pos",pos);
                 intent.putExtras(bundle);
                 setResult(RESULT_OK,intent);
                 finish();
                 break;
+                default:
+                    break;
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unsubscribe(qrCode.getSn());
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getMesg(EventMsg event) {
-        Log.d(TAG, "getMesg: "+event.getString());
-        String info = event.getString();
-        if (info != null){
-            try {
-                JSONObject json = new JSONObject(info);
-                String cmd = json.optString("cmd");
-                if (cmd.equals("device")){
-                    editText.setText(json.optString("devicename"));//设置名称
-                    imageFinish.setVisibility(View.VISIBLE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

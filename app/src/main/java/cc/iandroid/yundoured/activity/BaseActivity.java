@@ -27,6 +27,7 @@ import cc.iandroid.yundoured.bean.DaoMaster;
 import cc.iandroid.yundoured.bean.DaoSession;
 import cc.iandroid.yundoured.bean.DeviceInfoDao;
 import cc.iandroid.yundoured.common.EventMsg;
+import cc.iandroid.yundoured.utils.UDPUtils;
 
 /**
  * Created by gcy on 2017/5/29.
@@ -61,7 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity{
         //实例化mqtt对象
         mqtt = new MQTT();
         try {
-            mqtt.setHost("tcp://182.61.18.191:1883");//设置地址
+            mqtt.setHost("tcp://mqtt.tink.io");//设置地址
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -131,8 +132,26 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getMesg(EventMsg event) {}
 
-    public void publish(String topic,String cmd) {
-        connection.publish(topic+"ctr", cmd.getBytes(), QoS.AT_MOST_ONCE, false, new Callback<Void>() {
+    public void publish(String topic,String ip,String cmd,int type) {
+        if (type == 0) {
+            connection.publish(topic + "ctr", cmd.getBytes(), QoS.AT_MOST_ONCE, false, new Callback<Void>() {
+                @Override
+                public void onSuccess(Void value) {
+
+                }
+
+                @Override
+                public void onFailure(Throwable value) {
+
+                }
+            });
+        }else {
+            UDPUtils.sendCmd(ip,cmd);
+        }
+    }
+
+    public void publishNet(String topic,String cmd) {
+        connection.publish(topic + "ctr", cmd.getBytes(), QoS.AT_MOST_ONCE, false, new Callback<Void>() {
             @Override
             public void onSuccess(Void value) {
 
